@@ -1,0 +1,43 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>UI5 training</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZAP_UI5_TRAINIGTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZAP_UI5_TRAINIG</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>Z_AP_GET_CATEGORIES</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>Get categories</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>CATEGORY_ID</PARAMETER>
+       <TYP>INT2</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>RESULTS</PARAMETER>
+       <TYP>ZAP_ODATA_CATEGORIES</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>CATEGORY_ID</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>2 byte integer (signed)</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>RESULTS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Categories</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>
