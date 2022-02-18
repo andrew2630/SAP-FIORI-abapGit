@@ -1,14 +1,59 @@
-class ZCL_ZAP_UI5_TRAINIG_DPC_EXT definition
-  public
-  inheriting from ZCL_ZAP_UI5_TRAINIG_DPC
-  create public .
+CLASS zcl_zap_ui5_trainig_dpc_ext DEFINITION
+  PUBLIC
+  INHERITING FROM zcl_zap_ui5_trainig_dpc
+  CREATE PUBLIC .
 
-public section.
-protected section.
-private section.
+  PUBLIC SECTION.
+  PROTECTED SECTION.
+
+    METHODS productsset_get_entityset
+        REDEFINITION .
+  PRIVATE SECTION.
 ENDCLASS.
 
 
 
-CLASS ZCL_ZAP_UI5_TRAINIG_DPC_EXT IMPLEMENTATION.
+CLASS zcl_zap_ui5_trainig_dpc_ext IMPLEMENTATION.
+
+
+  METHOD productsset_get_entityset.
+
+    CONSTANTS product_id_property TYPE string VALUE 'PRODUCT_ID'.
+    CONSTANTS date_added_property TYPE string VALUE 'DATE_ADDED'.
+
+    DATA(filter) = io_tech_request_context->get_filter( ).
+    DATA(filter_select_options) = filter->get_filter_select_options( ).
+    DATA(filter_string) = filter->get_filter_string( ).
+
+    DATA(combined_filter) = ||.
+
+    DATA(product_id_filters) = VALUE /iwbep/t_cod_select_options(
+      filter_select_options[ property = product_id_property ]-select_options
+    OPTIONAL ).
+
+    DATA(date_added_filters) = VALUE /iwbep/t_cod_select_options(
+      filter_select_options[ property = date_added_property ]-select_options
+    OPTIONAL ).
+
+    TRY.
+        combined_filter = cl_shdb_seltab=>combine_seltabs(
+           it_named_seltabs = VALUE #(
+            ( name = product_id_property dref = REF #( product_id_filters ) )
+            ( name = date_added_property dref = REF #( date_added_filters ) )
+           )
+        ).
+      CATCH cx_shdb_exception INTO DATA(ex).
+    ENDTRY.
+
+    IF strlen( combined_filter ) > 0.
+      combined_filter = |{
+        substring( val = combined_filter
+                   len = strlen( combined_filter ) - 1 )
+      } )|.
+    ENDIF.
+
+    SELECT * FROM zap_products INTO CORRESPONDING FIELDS OF TABLE @et_entityset
+      WHERE (combined_filter).
+
+  ENDMETHOD.
 ENDCLASS.

@@ -1,6 +1,6 @@
 *---------------------------------------------------------------------*
 *    view related FORM routines
-*   generation date: 11.02.2022 at 19:07:35
+*   generation date: 18.02.2022 at 16:14:30
 *   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 *...processing: ZAPV_PRODUCTS...................................*
@@ -24,6 +24,8 @@ ZAPV_PRODUCTS-CATEGORY_ID =
 ZAP_PRODUCTS-CATEGORY_ID .
 ZAPV_PRODUCTS-UNIT_PRICE =
 ZAP_PRODUCTS-UNIT_PRICE .
+ZAPV_PRODUCTS-DATE_ADDED =
+ZAP_PRODUCTS-DATE_ADDED .
 <VIM_TOTAL_STRUC> = ZAPV_PRODUCTS.
     APPEND TOTAL.
   ENDSELECT.
@@ -90,6 +92,8 @@ ZAP_PRODUCTS-CATEGORY_ID =
 ZAPV_PRODUCTS-CATEGORY_ID .
 ZAP_PRODUCTS-UNIT_PRICE =
 ZAPV_PRODUCTS-UNIT_PRICE .
+ZAP_PRODUCTS-DATE_ADDED =
+ZAPV_PRODUCTS-DATE_ADDED .
     IF SY-SUBRC = 0.
     UPDATE ZAP_PRODUCTS .
     ELSE.
@@ -124,6 +128,8 @@ ZAPV_PRODUCTS-CATEGORY_ID =
 ZAP_PRODUCTS-CATEGORY_ID .
 ZAPV_PRODUCTS-UNIT_PRICE =
 ZAP_PRODUCTS-UNIT_PRICE .
+ZAPV_PRODUCTS-DATE_ADDED =
+ZAP_PRODUCTS-DATE_ADDED .
 ENDFORM.
 *---------------------------------------------------------------------*
 FORM CORR_MAINT_ZAPV_PRODUCTS USING VALUE(CM_ACTION) RC.
