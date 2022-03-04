@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_G4BA" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <_-IWBEP_-I_V4_MSGA>
+    <_-IWBEP_-I_V4_MSGA>
+     <GROUP_ID>ZAP_UI5_TRAINING</GROUP_ID>
+     <SERVICE_ID>ZAP_UI5_TRAINIG_V4</SERVICE_ID>
+     <REPOSITORY_ID>DEFAULT</REPOSITORY_ID>
+     <CREATED_BY>PJEZIOROWSKI</CREATED_BY>
+     <CHANGED_BY>PJEZIOROWSKI</CHANGED_BY>
+     <CREATED_TS>20220304153846</CREATED_TS>
+     <CHANGED_TS>20220304153846</CHANGED_TS>
+    </_-IWBEP_-I_V4_MSGA>
+   </_-IWBEP_-I_V4_MSGA>
+   <_-IWBEP_-I_V4_MSGR>
+    <_-IWBEP_-I_V4_MSGR>
+     <GROUP_ID>ZAP_UI5_TRAINING</GROUP_ID>
+     <CREATED_BY>PJEZIOROWSKI</CREATED_BY>
+     <CHANGED_BY>PJEZIOROWSKI</CHANGED_BY>
+     <CREATED_TS>20220304153654</CREATED_TS>
+     <CHANGED_TS>20220304153846</CHANGED_TS>
+    </_-IWBEP_-I_V4_MSGR>
+   </_-IWBEP_-I_V4_MSGR>
+   <_-IWBEP_-I_V4_MSGT>
+    <_-IWBEP_-I_V4_MSGT>
+     <GROUP_ID>ZAP_UI5_TRAINING</GROUP_ID>
+     <LANGUAGE>E</LANGUAGE>
+     <DESCRIPTION>UI5 training service group</DESCRIPTION>
+    </_-IWBEP_-I_V4_MSGT>
+   </_-IWBEP_-I_V4_MSGT>
+  </asx:values>
+ </asx:abap>
+</abapGit>

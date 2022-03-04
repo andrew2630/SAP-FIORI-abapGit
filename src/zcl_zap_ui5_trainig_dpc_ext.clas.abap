@@ -4,6 +4,9 @@ CLASS zcl_zap_ui5_trainig_dpc_ext DEFINITION
   CREATE PUBLIC .
 
   PUBLIC SECTION.
+
+    METHODS /iwbep/if_mgw_appl_srv_runtime~get_expanded_entityset
+        REDEFINITION .
   PROTECTED SECTION.
 
     METHODS productsset_get_entityset
@@ -54,6 +57,43 @@ CLASS zcl_zap_ui5_trainig_dpc_ext IMPLEMENTATION.
 
     SELECT * FROM zap_products INTO CORRESPONDING FIELDS OF TABLE @et_entityset
       WHERE (combined_filter).
+
+  ENDMETHOD.
+
+
+  METHOD /iwbep/if_mgw_appl_srv_runtime~get_expanded_entityset.
+
+    DATA results TYPE zap_odata_categories.
+    DATA included_categories TYPE RANGE OF int2.
+    DATA products TYPE zap_odata_products.
+
+    DATA(filter) = io_tech_request_context->get_filter( ).
+    DATA(filter_select_options) = filter->get_filter_select_options( ).
+    DATA(filter_string) = filter->get_filter_string( ).
+
+    " FIXME: use cl_shdb_seltab=>combine_seltabs with filter_select_options instead
+    SELECT * FROM zap_categories INTO CORRESPONDING FIELDS OF TABLE @results
+      WHERE (filter_string).
+
+    included_categories = VALUE #( FOR r IN results
+      ( sign = 'I' option = 'EQ' low = r-category_id )
+    ).
+
+    IF lines( included_categories ) > 0.
+      SELECT * FROM zap_products INTO CORRESPONDING FIELDS OF TABLE @products
+        WHERE category_id IN @included_categories.
+
+      LOOP AT results REFERENCE INTO DATA(result).
+        result->products = CORRESPONDING #( VALUE zap_odata_products(
+          FOR p IN products WHERE ( category_id = result->category_id ) ( p )
+        ) ).
+      ENDLOOP.
+    ENDIF.
+
+    APPEND 'PRODUCTS' TO et_expanded_tech_clauses.
+
+    copy_data_to_ref( EXPORTING is_data = results
+                      CHANGING cr_data = er_entityset ).
 
   ENDMETHOD.
 ENDCLASS.
