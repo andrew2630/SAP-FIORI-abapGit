@@ -22,7 +22,10 @@ CLASS zcl_zap_ui5_trainig_dpc_ext IMPLEMENTATION.
   METHOD productsset_get_entityset.
 
     CONSTANTS product_id_property TYPE string VALUE 'PRODUCT_ID'.
+    CONSTANTS category_id_property TYPE string VALUE 'CATEGORY_ID'.
+    CONSTANTS unit_price_property TYPE string VALUE 'UNIT_PRICE'.
     CONSTANTS date_added_property TYPE string VALUE 'DATE_ADDED'.
+    CONSTANTS sorting_descending TYPE string VALUE 'desc'.
 
     DATA(filter) = io_tech_request_context->get_filter( ).
     DATA(filter_select_options) = filter->get_filter_select_options( ).
@@ -34,6 +37,14 @@ CLASS zcl_zap_ui5_trainig_dpc_ext IMPLEMENTATION.
       filter_select_options[ property = product_id_property ]-select_options
     OPTIONAL ).
 
+    DATA(category_id_filters) = VALUE /iwbep/t_cod_select_options(
+      filter_select_options[ property = category_id_property ]-select_options
+    OPTIONAL ).
+
+    DATA(unit_price_filters) = VALUE /iwbep/t_cod_select_options(
+      filter_select_options[ property = unit_price_property ]-select_options
+    OPTIONAL ).
+
     DATA(date_added_filters) = VALUE /iwbep/t_cod_select_options(
       filter_select_options[ property = date_added_property ]-select_options
     OPTIONAL ).
@@ -42,21 +53,27 @@ CLASS zcl_zap_ui5_trainig_dpc_ext IMPLEMENTATION.
         combined_filter = cl_shdb_seltab=>combine_seltabs(
            it_named_seltabs = VALUE #(
             ( name = product_id_property dref = REF #( product_id_filters ) )
+            ( name = category_id_property dref = REF #( category_id_filters ) )
+            ( name = unit_price_property dref = REF #( unit_price_filters ) )
             ( name = date_added_property dref = REF #( date_added_filters ) )
            )
         ).
       CATCH cx_shdb_exception INTO DATA(ex).
     ENDTRY.
 
-    IF strlen( combined_filter ) > 0.
-      combined_filter = |{
-        substring( val = combined_filter
-                   len = strlen( combined_filter ) - 1 )
-      } )|.
-    ENDIF.
+    REPLACE ALL OCCURRENCES OF '(' IN combined_filter WITH ' ( '.
+    REPLACE ALL OCCURRENCES OF ')' IN combined_filter WITH ' ) '.
 
     SELECT * FROM zap_products INTO CORRESPONDING FIELDS OF TABLE @et_entityset
       WHERE (combined_filter).
+
+    DATA(orderby) = io_tech_request_context->get_orderby( ).
+    DATA(orders) = VALUE abap_sortorder_tab( FOR o IN orderby (
+      name = o-property
+      descending = xsdbool( o-order = sorting_descending )
+    ) ).
+
+    SORT et_entityset BY (orders).
 
   ENDMETHOD.
 
