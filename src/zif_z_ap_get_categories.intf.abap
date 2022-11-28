@@ -27,6 +27,7 @@ interface ZIF_Z_AP_GET_CATEGORIES
       SUPPLIER_ID type INT2,
       CATEGORY_ID type INT2,
       UNIT_PRICE type WERT8,
+      DATE_ADDED type DATS,
       SUPPLIERS type ZAP_ODATA_SUPPLIERS,
     end of ZAP_ODATA_PRODUCT .
   types:

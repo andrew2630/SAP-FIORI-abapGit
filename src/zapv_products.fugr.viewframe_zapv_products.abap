@@ -1,6 +1,6 @@
 *---------------------------------------------------------------------*
 *    program for:   VIEWFRAME_ZAPV_PRODUCTS
-*   generation date: 11.02.2022 at 19:07:35
+*   generation date: 18.02.2022 at 16:14:29
 *   view maintenance generator version: #001407#
 *---------------------------------------------------------------------*
 FUNCTION VIEWFRAME_ZAPV_PRODUCTS       .
